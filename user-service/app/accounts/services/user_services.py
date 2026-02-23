@@ -1,6 +1,8 @@
 from accounts.infrastructure.repositories import UserRepository
 from accounts.api.jwt import generate_tokens
 from rest_framework.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
+from accounts.infrastructure.models import User
 class UserService:
     @staticmethod
     def register(data):
@@ -24,3 +26,8 @@ class UserService:
             "access": access,
             "refresh": refresh,
         }
+        
+    @staticmethod
+    def update_user(user_id,data):
+        return UserRepository.update_user(user_id, data)
+       
