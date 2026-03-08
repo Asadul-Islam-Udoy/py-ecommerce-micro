@@ -5,26 +5,6 @@ from django.db import transaction
 
 class ProductService:
     @staticmethod
-    def create_product(self, product_data,images_data):
-        # Logic to create a new product using the provided data
-        variants_data = product_data.pop('variants',[])
-        product = Product.objects.create(**product_data)
-        
-        variants_objs = [ProductVariant(product=product, **v) for v in variants_data]
-        
-        if variants_objs:
-            ProductVariant.objects.bulk_create(variants_objs)
-            
-        images_objs = []
-        if images_data:
-            for img in images_data:
-                images_objs.append(ProductImage(product=product, **img))
-            if images_objs:
-                ProductImage.objects.bulk_create(images_objs)
-        return product  
-    
-       
-    @staticmethod
     def get_products(page=1,per_page=10,brand=None, min_price=None, max_price=None, search=None, order_by='-id'):
         queryset =  (
             Product.objects.only('id','title','description','brand','price').prefetch_related(Prefetch('variants'), Prefetch('images'))

@@ -17,7 +17,7 @@ class ProductCreateView(APIView):
        variants = request.data.get('variants')
        serializer = ProductSerializer(data=request.data)
        if serializer.is_valid():
-           product = ProductService.create_product(serializer.validated_data,images,variants)
+           product =  product = serializer.save()
            return Response(ProductSerializer(product).data, status=status.HTTP_201_CREATED)
        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
    

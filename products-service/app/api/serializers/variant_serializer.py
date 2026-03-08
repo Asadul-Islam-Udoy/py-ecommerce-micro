@@ -3,6 +3,7 @@ from api.models import ProductVariant
 
 
 class ProductVariantSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = ProductVariant
         fields = ['id', 'product', 'variant_name', 'sku', 'stock_quantity', 'color', 'size', 'price']
