@@ -6,13 +6,21 @@ from api.serializers.variant_serializer import ProductVariantSerializer
 from api.serializers.image_serializer import ProductImageSerializer
 from api.services.product_service import ProductService
 
+from api.security.permissions import (
+    HasProductCreatePermission,
+    HasProductUpdatePermission,
+    HasProductGetPermission,
+    HasProductDeletePermission
+)
 class ProductCreateView(APIView):
+    permission_classes = [HasProductCreatePermission]
     def get(self, request):
         products = ProductService.get_all_products()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+   
     def post(self, request):
+       
        images = request.FILES.getlist('images')
        variants = request.data.get('variants')
        serializer = ProductSerializer(data=request.data)
