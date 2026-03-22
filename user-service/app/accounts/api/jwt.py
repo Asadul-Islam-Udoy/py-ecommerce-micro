@@ -1,6 +1,6 @@
 import jwt,datetime
 from django.conf import settings
-from accounts.infrastructure.models import User
+from accounts.models import User
 from pathlib import Path
 BASE_DIR = settings.BASE_DIR
 

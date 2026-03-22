@@ -13,6 +13,19 @@ class OrderItemInputSerializer(serializers.Serializer):
 class CreateOrderSerializer(serializers.Serializer):
     user_id = serializers.UUIDField()
     items = OrderItemInputSerializer(many=True)
+    
+    def validate_items(self, value):
+        if not value:
+            raise serializers.ValidationError("Order must contain at least one item.")
+
+        for item in value:
+            if item["quantity"] <= 0:
+                raise serializers.ValidationError("Quantity must be greater than 0.")
+
+            if item["price"] <= 0:
+                raise serializers.ValidationError("Price must be greater than 0.")
+
+        return value
 
 
 class OrderItemSerializer(serializers.ModelSerializer):

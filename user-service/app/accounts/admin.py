@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .infrastructure.models import User, Role, Permission
+from .models import User, Role, Permission
 from django.contrib.admin import AdminSite
 # ----------------------------
 # Permission Admin

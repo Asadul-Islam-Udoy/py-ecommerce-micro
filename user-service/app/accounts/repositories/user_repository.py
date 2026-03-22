@@ -1,4 +1,4 @@
-from .models import User,Role,Permission
+from accounts.models import User,Role,Permission
 from rest_framework.exceptions import ValidationError
 from django.http import Http404
 class RoleRepository:

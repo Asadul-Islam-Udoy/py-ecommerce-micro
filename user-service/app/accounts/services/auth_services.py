@@ -1,5 +1,5 @@
 from rest_framework.exceptions import AuthenticationFailed
-from accounts.infrastructure.repositories import UserRepository
+from accounts.repositories.user_repository import UserRepository
 from accounts.api.jwt import generate_tokens
 
 class AuthService:

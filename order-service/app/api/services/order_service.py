@@ -1,6 +1,8 @@
 from api.models import Order, OrderItem
 from django.db import transaction
-import uuid
+import random
+import string
+from datetime import datetime
 from django.core.paginator import Paginator
 
 class OrderService:
@@ -45,7 +47,15 @@ class OrderService:
 
         except Order.DoesNotExist:
             return None   
-         
+    
+    
+    
+    @staticmethod
+    def generate_order_number():
+        date_part = datetime.utcnow().strftime("%Y%m%d")
+        random_part = ''.join(random.choices(string.digits, k=6))
+        return f"ORD-{date_part}-{random_part}"
+    
     @staticmethod
     @transaction.atomic
     def create_order(user_id, items):
@@ -53,6 +63,7 @@ class OrderService:
         order = Order.objects.create(
             user_id = user_id,
             subtotal = 0,
+             order_number=OrderService.generate_order_number(),
             total_price = 0,
         )
         
@@ -60,7 +71,7 @@ class OrderService:
         total = 0
         
         for item in items:
-            item_total = item["price"] * item["quentity"]
+            item_total = item["price"] * item["quantity"]
             
             order_items.append(
                 OrderItem(
@@ -81,6 +92,6 @@ class OrderService:
 
         order.subtotal = total
         order.total_price = total
-        order.save()
+        order.save(update_fields=["subtotal", "total_price"])
 
         return order

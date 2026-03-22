@@ -3,7 +3,7 @@ from django.conf import settings
 from rest_framework import exceptions
 from pathlib import Path
 from rest_framework.authentication import BaseAuthentication
-from accounts.infrastructure.models import User
+from accounts.models import User
 KEYS_DIR = Path(settings.BASE_DIR)/'accounts'/'keys'
 PRIVATE_KEY = (KEYS_DIR / "private.pem").read_text()
 PUBLIC_KEY = (KEYS_DIR / "public.pem").read_text()

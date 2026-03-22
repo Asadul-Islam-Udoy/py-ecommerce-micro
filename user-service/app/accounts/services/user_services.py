@@ -1,8 +1,8 @@
-from accounts.infrastructure.repositories import UserRepository
+from accounts.repositories.user_repository import UserRepository
 from accounts.api.jwt import generate_tokens
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from accounts.infrastructure.models import User
+from accounts.models import User
 class UserService:
     @staticmethod
     def register(data):
