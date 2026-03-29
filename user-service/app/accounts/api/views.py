@@ -12,6 +12,7 @@ from accounts.api.serializers import RegisterSerializer
 from accounts.api.serializers import UserUpdateSerializer
 from django.http import Http404
 from rest_framework.exceptions import ValidationError
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
