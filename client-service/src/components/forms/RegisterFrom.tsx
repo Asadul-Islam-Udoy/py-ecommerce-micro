@@ -113,6 +113,7 @@ export default function RegisterForm() {
             rounded-xl
             transition
             hover:scale-[1.02]
+            cursor-pointer
           "
         >
           {loading ? "Creating..." : "Create Account"}

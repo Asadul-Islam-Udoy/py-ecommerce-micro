@@ -111,6 +111,7 @@ export default function LoginForm() {
             rounded-xl
             transition
             hover:scale-[1.02]
+            cursor-pointer
           "
         >
           {loading ? "Login..." : "Login"}
@@ -124,7 +125,7 @@ export default function LoginForm() {
       >
         Don&apos;t have an account?{" "}
         <a
-          href="/register"
+          href="/pages/auth/registration"
           className="
             underline hover:text-white font-semibold
           "
