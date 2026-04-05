@@ -4,6 +4,9 @@ FROM python:3.12-slim
 # 2. Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE=user_service.settings 
+ENV SECRET_KEY=dummy
+ENV DEBUG=1
 
 # 3. Set working directory
 WORKDIR /app
@@ -15,8 +18,8 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # 5. Copy project
 COPY app/ .
 
-# 6. Collect static files (optional for Nginx serving)
-RUN python manage.py collectstatic --noinput
+# 6. Expose port
+EXPOSE 8000
 
-# 7. Run the server (for dev)
-CMD ["gunicorn", "user_service.wsgi:application", "--bind", "0.0.0.0:8000"]
+# 7. Entry point: run collectstatic & migrations, then start server
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn user_service.wsgi:application --bind 0.0.0.0:8000"]

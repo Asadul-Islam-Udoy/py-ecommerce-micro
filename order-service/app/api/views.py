@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from app.events import publish_event
 from .serializers.order_serializer import (
     CreateOrderSerializer,
     OrderSerializer
@@ -34,6 +35,11 @@ class OrderView(APIView):
                 user_id=serializer.validated_data["user_id"],
                 items=serializer.validated_data["items"]
                 )
+            publish_event("order_created", {
+            "order_id": order.id,
+            "user_id": order.user_id,
+            "amount": order.total_price
+            })
             return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
